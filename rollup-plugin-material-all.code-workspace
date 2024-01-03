@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "-- root --"
+		},
+		{
+			"path": "./packages/rollup-plugin-material-all"
+		},
+		{
+			"path": "./packages/shared"
+		},
+		{
+			"path": "./packages/vite-plugin-material-all"
+		}
+	]
+}

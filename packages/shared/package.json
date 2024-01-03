@@ -1,0 +1,45 @@
+{
+	"name": "rollup-plugin-material-all-shared",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"main": "./lib/index.js",
+	"module": "./lib/index.js",
+	"scripts": {
+		"build": "wireit",
+		"test": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"dependencies": [
+				"build:ts"
+			]
+		},
+		"build:ts": {
+			"command": "tsc --pretty",
+			"clean": "if-file-deleted",
+			"files": [
+				"tsconfig.json",
+				"src"
+			],
+			"output": [
+				"lib"
+			]
+		},
+		"test": {
+			"command": "mocha lib/test/**/*_test.js",
+			"dependencies": [
+				"build:ts"
+			]
+		}
+	},
+	"author": "Valentin Degenne",
+	"license": "MIT",
+	"dependencies": {
+		"glob": "^10.3.10",
+		"rollup-pluginutils": "^2.8.2"
+	},
+	"devDependencies": {
+		"@material/web": "^1.1.1"
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"name": "@vdegenne-internal/monorepo",
+	"version": "0.0.0",
+	"type": "module",
+	"workspaces": [
+		"packages/*"
+	],
+	"description": "Monorepo for material-all plugin",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Valentin Degenne",
+	"license": "MIT",
+	"#comment": "!!! DO NOT REMOVE THE MATERIAL/WEB DEP HERE, IT IS USED TO FORCE INSTALLING LATEST VERSION OF MATERIAL/WEB IN SHARED PACKAGE FOR TESTING !!!",
+	"devDependencies": {
+		"@material/web": "^0.1.0-alpha.0",
+		"@types/chai": "^4.3.11",
+		"@types/mocha": "^10.0.6",
+		"chai": "^5.0.0",
+		"mocha": "^10.2.0",
+		"typescript": "^5.3.3",
+		"wireit": "^0.14.1"
+	}
+}

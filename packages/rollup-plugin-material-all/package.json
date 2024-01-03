@@ -1,0 +1,56 @@
+{
+	"name": "rollup-plugin-material-all",
+	"version": "1.0.1",
+	"description": "Dev with @material/web/all.js, Build what's needed.",
+	"main": "lib/index.js",
+	"module": "lib/index.js",
+	"type": "module",
+	"author": "Valentin Degenne <vdegenne@gmail.com>",
+	"license": "MIT",
+	"keywords": [
+		"material-web",
+		"material-you",
+		"material-design",
+		"rollup"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vdegenne/rollup-plugin-material-all.git"
+	},
+	"scripts": {
+		"dev": "wireit",
+		"build": "tsc --pretty"
+	},
+	"wireit": {
+		"build:copy-shared": {
+			"command": "cp -r ../shared/src src/shared",
+			"files": [
+				"../shared/src"
+			],
+			"output": [
+				"src/shared"
+			]
+		},
+		"dev": {
+			"command": "true",
+			"dependencies": [
+				"build:copy-shared"
+			]
+		}
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.26.2",
+		"@material/web": "^1.0.1",
+		"@types/node": "^20.8.10",
+		"rollup": "^4.3.0",
+		"typescript": "^5.2.2",
+		"vite": "^4.5.0"
+	},
+	"dependencies": {
+		"glob": "^10.3.10",
+		"rollup-pluginutils": "^2.8.2"
+	},
+	"files": [
+		"lib"
+	]
+}
