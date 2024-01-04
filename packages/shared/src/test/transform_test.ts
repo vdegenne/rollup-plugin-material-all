@@ -24,7 +24,7 @@ const test2 = \`<md-menu>
 /* <md-icon-button></md-icon-button> */
                `;
 
-			const output = await transform(input, 'perFile', [
+			const output = await transform(input, 'test.js', 'perFile', [
 				'md-filled-icon-button',
 			]);
 			const imports = findImportsFromContent(output);
@@ -44,13 +44,23 @@ const test2 = \`<md-menu>
 			// 	'import "@material/web/progress/circular-progress.js"'
 			// );
 		});
+
+		it('should ignore html files', async () => {
+			const input = `
+        <md-icon>settings</md-icon>
+      `;
+			const output = await transform(input, 'index.html', 'perFile', []);
+			const imports = findImportsFromContent(output);
+			assert.equal(imports.length, 0);
+			assert.deepEqual(imports, []);
+		});
 	});
 
 	describe("'all' mode transformation", () => {
 		it('should throw if elements were not provided', async () => {
 			let threw = false;
 			try {
-				await transform('', 'all');
+				await transform('', 'test.js', 'all');
 			} catch {
 				threw = true;
 			}
@@ -64,7 +74,7 @@ import '@material/web/all.js';
 // any content
                `;
 
-			const output = await transform(input, 'all', [
+			const output = await transform(input, 'test.js', 'all', [
 				'md-icon',
 				'md-icon',
 				'md-icon-button',
@@ -75,6 +85,16 @@ import '@material/web/all.js';
 				'@material/web/icon/icon.js',
 				'@material/web/iconbutton/icon-button.js',
 			]);
+		});
+
+		it('should ignore html files', async () => {
+			const input = `
+        <md-icon>settings</md-icon>
+      `;
+			const output = await transform(input, 'index.html', 'all', []);
+			const imports = findImportsFromContent(output);
+			assert.equal(imports.length, 0);
+			assert.deepEqual(imports, []);
 		});
 	});
 });

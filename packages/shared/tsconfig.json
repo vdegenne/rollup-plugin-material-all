@@ -6,7 +6,7 @@
 		"outDir": "lib",
 		"allowSyntheticDefaultImports": true,
 		"declaration": true,
-		// "declarationMap": true,
+		"declarationMap": true,
 		"sourceMap": true
 	},
 	"include": ["src/**/*.ts"]

@@ -7,7 +7,22 @@
 	],
 	"description": "Monorepo for material-all plugin",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build": "wireit",
+		"test": "wireit"
+	},
+	"wireit": {
+		"build": {
+			"dependencies": [
+				"./packages/shared:build",
+				"./packages/rollup-plugin-material-all:build"
+			]
+		},
+		"test": {
+			"dependencies": [
+				"./packages/shared:test",
+				"./packages/rollup-plugin-material-all:test"
+			]
+		}
 	},
 	"author": "Valentin Degenne",
 	"license": "MIT",

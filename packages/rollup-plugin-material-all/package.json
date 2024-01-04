@@ -2,9 +2,16 @@
 	"name": "rollup-plugin-material-all",
 	"version": "1.0.1",
 	"description": "Dev with @material/web/all.js, Build what's needed.",
+	"type": "module",
 	"main": "lib/index.js",
 	"module": "lib/index.js",
-	"type": "module",
+	"exports": {
+		".": {
+			"import": "./lib/index.js",
+			"default": "./lib/index.js",
+			"types": "./lib/index.d.ts"
+		}
+	},
 	"author": "Valentin Degenne <vdegenne@gmail.com>",
 	"license": "MIT",
 	"keywords": [
@@ -18,39 +25,47 @@
 		"url": "https://github.com/vdegenne/rollup-plugin-material-all.git"
 	},
 	"scripts": {
-		"dev": "wireit",
-		"build": "tsc --pretty"
+		"build": "wireit",
+		"test": "wireit"
 	},
 	"wireit": {
-		"build:copy-shared": {
-			"command": "cp -r ../shared/src src/shared",
-			"files": [
-				"../shared/src"
-			],
-			"output": [
-				"src/shared"
+		"build": {
+			"dependencies": [
+				"build:ts"
 			]
 		},
-		"dev": {
-			"command": "true",
+		"build:ts": {
+			"command": "tsc --pretty",
+			"clean": "if-file-deleted",
+			"files": [
+				"tsconfig.json",
+				"src"
+			],
+			"output": [
+				"lib"
+			]
+		},
+		"test": {
+			"command": "mocha lib/test/**/*_test.js",
+			"files": [
+				"test-fixtures"
+			],
 			"dependencies": [
-				"build:copy-shared"
+				"build:ts"
 			]
 		}
 	},
 	"devDependencies": {
-		"@changesets/cli": "^2.26.2",
-		"@material/web": "^1.0.1",
-		"@types/node": "^20.8.10",
+		"@material/web": "^1.1.1",
 		"rollup": "^4.3.0",
-		"typescript": "^5.2.2",
 		"vite": "^4.5.0"
 	},
 	"dependencies": {
-		"glob": "^10.3.10",
-		"rollup-pluginutils": "^2.8.2"
+		"rollup-plugin-material-all-shared": "^1.0.0"
 	},
 	"files": [
-		"lib"
+		"/lib",
+		"!/lib/**/*.js.map",
+		"!/lib/test"
 	]
 }
