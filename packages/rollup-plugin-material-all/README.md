@@ -1,38 +1,82 @@
 # rollup-plugin-material-all
 
-This rollup plugin lets you use `@material/web/all.js` during development so you don't have to bother importing material elements every time you need them.
-It will replace the actual `@material/web/all.js` import during build time with only the elements you use throughout your project, that is optimizing your final bundle.
+Rollup/Vite plugin that imports only the elements needed during runtime.  
+That allows you to use `@material/web/all.js` during development so you don't have to bother writing any imports yourself.
 
-## Installation
+## Install
 
-Make sure you don't run the plugin during development so you can use `@material/web/all.js` freely,
-
-### package.json
-
-```json
-{
-	"scripts": {
-		"dev": "NODE_ENV=development rollup -c",
-		"build": "rollup -c"
-	}
-}
+```bash
+npm add -D rollup-plugin-material-all
 ```
 
-### rollup.config.js
+_(Indeed, You'll also need to install `@material/web`)_
+
+## Usage
+
+### 🛠️ During development
+
+_do not use the plugin,_ all you need is to import the `all.js` module from the core library:
+
+```js
+import `@material/web/all.js`
+```
+
+_Note: It can be anywhere_
+
+### 📦 At build time
+
+import the plugin like so
+
+`rollup.config.js`:
 
 ```js
 import {materialAll} from 'rollup-plugin-material-all';
 
-const DEV = process.env.NODE_ENV == 'development';
+// Required to prevent using the plugin during development
+const DEV = process.env.NODE_ENV == 'DEV';
 
 export default {
-	plugins: [
-		DEV ? {} : materialAll(),
-		//...
-	],
+	plugins: [DEV ? {} : materialAll()],
 };
 ```
 
-## License
+<details>
+<summary>Or using Vite</summary>
 
-MIT
+`vite.config.js`:
+
+```js
+import {materialAll} from 'rollup-plugin-material-all';
+import {defineConfig} from 'vite';
+
+export default defineConfig({
+	plugins: [
+		// Won't be used during dev
+		materialAll(),
+	],
+});
+```
+
+</details>
+
+## Details
+
+The plugin will scan your sources to find all md-_ elements used in your code.  
+It uses this default pattern `src/\*\*/_.{js,ts,jsx,tsx}` but you can always specify a different value in the options:
+
+```js
+materialAll({
+	// Only ts files
+	include: 'src/**/*.ts',
+});
+```
+
+### Additional elements
+
+Sometimes md-\* elements are imported from external libraries, in that case `additionalElements` can be used to specify these elements:
+
+```js
+materialAll({
+	additionalElements: ['md-circular-progress', 'md-dialog'],
+});
+```
