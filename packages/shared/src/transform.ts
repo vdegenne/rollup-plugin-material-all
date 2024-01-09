@@ -1,6 +1,6 @@
 import {MATERIAL_ALL_IMPORT_REGEX} from './constants.js';
 import type {TransformationMode} from './index.js';
-import {getElementImportsMap, mapNamesToImports} from './material.js';
+import {getElementsImportsMap, mapNamesToImports} from './material.js';
 import {findElementsInContent} from './search.js';
 
 const materialAllImportGlobalRegex = new RegExp(MATERIAL_ALL_IMPORT_REGEX, 'g');
@@ -18,7 +18,7 @@ export async function transform(
 	code: string,
 	id: string,
 	mode: TransformationMode = 'perFile',
-	elements?: string[]
+	elements?: string[],
 ): Promise<string> {
 	switch (mode) {
 		case 'perFile':
@@ -34,7 +34,7 @@ export async function transform(
 export async function perFileTransform(
 	code: string,
 	id: string,
-	additionalElements: string[] = []
+	additionalElements: string[] = [],
 ) {
 	if (/\.html/.test(id)) {
 		// Can't inject imports in html files
@@ -54,7 +54,7 @@ export async function perFileTransform(
 
 	// 2. Prepend elements found in this code
 	const elements = await findElementsInContent(code);
-	const importsMap = await getElementImportsMap();
+	const importsMap = await getElementsImportsMap();
 	const imports = elements
 		.map((name) => `import "${importsMap[name]}";`)
 		.join('\n');
@@ -66,7 +66,7 @@ export async function perFileTransform(
 export async function allTransformation(
 	code: string,
 	id: string,
-	elements: string[]
+	elements: string[],
 ) {
 	if (/\.html/.test(id)) {
 		// Can't inject imports in html files

@@ -9,7 +9,7 @@ Rollup/Vite plugin that imports only the elements needed during runtime.
 npm add -D rollup-plugin-material-all
 ```
 
-_(Indeed, You'll also need to install `@material/web`)_
+_(You'll also need to install `@material/web` separately)_
 
 ## Usage
 
@@ -21,7 +21,7 @@ _do not use the plugin,_ all you need to do is to import the `all.js` module fro
 import `@material/web/all.js`
 ```
 
-That's it*!*
+That's it _!_
 
 ### 📦 At build time
 
@@ -36,7 +36,10 @@ import {materialAll} from 'rollup-plugin-material-all';
 const DEV = process.env.NODE_ENV == 'DEV';
 
 export default {
-	plugins: [DEV ? {} : materialAll()],
+	plugins: [
+		DEV ? {} : materialAll(),
+		// other plugins...
+	],
 };
 ```
 
@@ -62,7 +65,7 @@ export default defineConfig({
 ## Details
 
 The plugin will scan your sources to find all md-\* elements used in your code.  
-By default this default pattern will be used: `src/\*\*/_.{js,ts,jsx,tsx}`  
+By default this pattern will be used: `src/\*\*/_.{js,ts,jsx,tsx}`  
 but you can always specify a different value in the options:
 
 ```js
@@ -88,3 +91,7 @@ materialAll({
 	additionalElements: ['md-circular-progress', 'md-dialog'],
 });
 ```
+
+## License
+
+MIT

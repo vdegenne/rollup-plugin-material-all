@@ -1,11 +1,11 @@
 import {assert} from 'chai';
-import {getElementImportsMap, pruneFakeElements} from '../material.js';
+import {getElementsImportsMap, pruneFakeElements} from '../material.js';
 
 describe('Material helpers', () => {
 	it('loads some cached values', async () => {
 		assert.equal(
-			(await getElementImportsMap())['md-icon'],
-			'@material/web/icon/icon.js'
+			(await getElementsImportsMap())['md-icon'],
+			'@material/web/icon/icon.js',
 		);
 	});
 

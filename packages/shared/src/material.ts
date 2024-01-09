@@ -6,13 +6,13 @@ const allFilePath = pathlib.resolve(
 	'node_modules',
 	'@material',
 	'web',
-	'all.js'
+	'all.js',
 );
 
 let cachedAllFileContent: string;
 let cachedElementImportsMap: {[elementName: string]: string} = {};
 
-export async function getElementImportsMap() {
+export async function getElementsImportsMap() {
 	if (cachedAllFileContent === undefined) {
 		await loadAllFile();
 	}
@@ -22,7 +22,7 @@ export async function getElementImportsMap() {
 export async function loadAllFile() {
 	if (!fs.existsSync(allFilePath)) {
 		throw new Error(
-			'\n`@material/web/all.js` file not found, make sure `@material/web` is installed in the current project.\n'
+			'\n`@material/web/all.js` file not found, make sure `@material/web` is installed in the current project.\n',
 		);
 	}
 
@@ -36,19 +36,19 @@ export async function loadAllFile() {
 		const elementNameMatch = importee.match(elementNameRegex);
 		cachedElementImportsMap[`md-${elementNameMatch[1]}`] = importee.replace(
 			/^\./,
-			'@material/web'
+			'@material/web',
 		);
 	}
 }
 
 export async function pruneFakeElements(elements: string[]) {
-	const availableElements = Object.keys(await getElementImportsMap());
+	const availableElements = Object.keys(await getElementsImportsMap());
 
 	return elements.filter((el) => availableElements.includes(el));
 }
 
 export async function mapNamesToImports(elementNames: string[]) {
-	const map = await getElementImportsMap();
+	const map = await getElementsImportsMap();
 
 	return elementNames.map((name) => map[name]);
 }
