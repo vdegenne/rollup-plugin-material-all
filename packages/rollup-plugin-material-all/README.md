@@ -1,8 +1,8 @@
-<div align="center">
-  <img src="https://github.com/vdegenne/rollup-plugin-material-all/assets/2827383/d1be1a5c-3c8b-4d24-857e-4ed159cdb1de">
-</div>
+<p align="center">
+<img src="https://github.com/vdegenne/rollup-plugin-material-all/assets/2827383/d1be1a5c-3c8b-4d24-857e-4ed159cdb1de">
+</p>
 
-Rollup/Vite plugin that imports only the elements needed during runtime.  
+### Rollup/Vite plugin that imports only the elements needed during runtime.
 (So you can use `@material/web/all.js` during development and don't have to worry writing imports yourself ✨)
 
 ## Install
