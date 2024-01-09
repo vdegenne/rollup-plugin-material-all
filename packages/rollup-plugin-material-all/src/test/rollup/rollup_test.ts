@@ -1,10 +1,7 @@
 import {OutputChunk, rollup} from 'rollup';
 import {materialAll} from '../../index.js';
 import {expect} from 'chai';
-import {
-	findImportsFromContent,
-	getElementImportsMap,
-} from 'rollup-plugin-material-all-shared';
+import {findImportsFromContent} from 'rollup-plugin-material-all-shared';
 
 describe('Rollup', () => {
 	it('"perFile" mode', async () => {

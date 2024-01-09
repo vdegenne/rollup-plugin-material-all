@@ -1,7 +1,7 @@
 {
 	"name": "rollup-plugin-material-all",
-	"version": "1.0.1",
-	"description": "Dev with @material/web/all.js, Build what's needed.",
+	"version": "1.0.4",
+	"description": "Develop with @material/web/all.js - Build what's needed.",
 	"type": "module",
 	"main": "lib/index.js",
 	"module": "lib/index.js",
@@ -15,10 +15,13 @@
 	"author": "Valentin Degenne <vdegenne@gmail.com>",
 	"license": "MIT",
 	"keywords": [
+		"rollup-plugin",
+		"vite-plugin",
+		"web-components",
 		"material-web",
 		"material-you",
 		"material-design",
-		"rollup"
+		"build"
 	],
 	"repository": {
 		"type": "git",
