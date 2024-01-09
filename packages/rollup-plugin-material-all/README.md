@@ -68,7 +68,7 @@ export default defineConfig({
 ## Details
 
 The plugin will scan your sources to find all md-\* elements used in your code.  
-By default this pattern will be used: `src/\*\*/_.{js,ts,jsx,tsx}`  
+By default this pattern will be used: `src/**/*.{js,ts,jsx,tsx}`  
 but you can always specify a different value in the options:
 
 ```js
