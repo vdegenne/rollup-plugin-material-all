@@ -6,6 +6,8 @@ const files = [
 	'/src/bar.js',
 	'/src/baz.js?inline',
 	'/src/test.js.css',
+	'/src/sub/path/test.js',
+	'/src/sub/path/style.js?inline',
 	'/this/is/a/long/path.txt',
 	'/index.html',
 	'/bar/index.html',
@@ -18,6 +20,16 @@ describe('filter.js', () => {
 		const filter = createFilter('src/*.js', '', {resolve: '/'});
 		const filtered = files.filter((file) => filter(file));
 		assert.deepEqual(filtered, ['/src/foo.js', '/src/bar.js']);
+	});
+
+	it('accepts common globs', () => {
+		const filter = createFilter('src/**/*.js', '', {resolve: '/'});
+		const filtered = files.filter((file) => filter(file));
+		assert.deepEqual(filtered, [
+			'/src/foo.js',
+			'/src/bar.js',
+			'/src/sub/path/test.js',
+		]);
 	});
 
 	it('accepts glob patterns', () => {
@@ -68,6 +80,21 @@ describe('filter.js', () => {
 			'/src/baz.js?inline',
 			// Careful because it also includes other extensions than js
 			'/src/test.js.css',
+		]);
+	});
+
+	it('accepts regular expressions', async () => {
+		const filter = createFilter(/src\/.*\.js(\?.*)?$/, undefined, {
+			resolve: '/',
+		});
+		const filtered = files.filter((file) => filter(file));
+
+		assert.deepEqual(filtered, [
+			'/src/foo.js',
+			'/src/bar.js',
+			'/src/baz.js?inline',
+			'/src/sub/path/test.js',
+			'/src/sub/path/style.js?inline',
 		]);
 	});
 });
