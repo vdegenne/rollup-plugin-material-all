@@ -1,7 +1,0 @@
-{
-	"name": "@vdegenne-internal/live-testing",
-	"type": "module",
-	"devDependencies": {
-		"rollup-plugin-material-all": "^1.0.1"
-	}
-}
