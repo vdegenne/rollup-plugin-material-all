@@ -1,5 +1,11 @@
 # rollup-plugin-material-all
 
+## 1.1.0
+
+### Minor Changes
+
+- Add `includeComments` option to the plugin
+
 ## 1.0.6
 
 ### Patch Changes

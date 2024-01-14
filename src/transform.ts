@@ -21,14 +21,14 @@ export async function transform(
 	code: string,
 	id: string,
 	mode: TransformationMode = 'perFile',
-	elements?: string[],
+	elements?: string[]
 ): Promise<string> {
 	switch (mode) {
 		case 'perFile':
 			return perFileTransform(code, id, elements);
 		case 'all':
 			if (elements === undefined) {
-				throw new Error("elements argument is required in 'all' mode.");
+				throw new Error("`elements` argument is required in 'all' mode.");
 			}
 			return allTransformation(code, id, elements);
 	}
@@ -37,7 +37,7 @@ export async function transform(
 export function perFileTransform(
 	code: string,
 	id: string,
-	additionalElements: string[] = [],
+	additionalElements: string[] = []
 ) {
 	if (/\.html/.test(id)) {
 		// Can't inject imports in html files
@@ -71,7 +71,7 @@ export function perFileTransform(
 export function allTransformation(
 	code: string,
 	id: string,
-	elements: string[],
+	elements: string[]
 ) {
 	if (/\.html/.test(id)) {
 		// Can't inject imports in html files
