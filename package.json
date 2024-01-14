@@ -1,11 +1,32 @@
 {
-	"name": "@vdegenne-internal/monorepo",
-	"version": "0.0.0",
+	"name": "rollup-plugin-material-all",
+	"version": "1.0.5",
+	"description": "Develop with @material/web/all.js - Build what's needed.",
 	"type": "module",
-	"workspaces": [
-		"packages/*"
+	"main": "lib/index.js",
+	"module": "lib/index.js",
+	"exports": {
+		".": {
+			"import": "./lib/index.js",
+			"default": "./lib/index.js",
+			"types": "./lib/index.d.ts"
+		}
+	},
+	"author": "Valentin Degenne <vdegenne@gmail.com>",
+	"license": "MIT",
+	"keywords": [
+		"rollup-plugin",
+		"vite-plugin",
+		"web-components",
+		"material-web",
+		"material-you",
+		"material-design",
+		"build"
 	],
-	"description": "Monorepo for material-all plugin",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vdegenne/rollup-plugin-material-all.git"
+	},
 	"scripts": {
 		"build": "wireit",
 		"test": "wireit"
@@ -13,27 +34,42 @@
 	"wireit": {
 		"build": {
 			"dependencies": [
-				"./packages/shared:build",
-				"./packages/rollup-plugin-material-all:build"
+				"build:ts"
+			]
+		},
+		"build:ts": {
+			"command": "tsc --pretty",
+			"clean": "if-file-deleted",
+			"files": [
+				"tsconfig.json",
+				"src"
+			],
+			"output": [
+				"lib"
 			]
 		},
 		"test": {
+			"command": "mocha lib/test/**/*_test.js",
+			"files": [
+				"test-fixtures"
+			],
 			"dependencies": [
-				"./packages/shared:test",
-				"./packages/rollup-plugin-material-all:test"
+				"build:ts"
 			]
 		}
 	},
-	"author": "Valentin Degenne",
-	"license": "MIT",
-	"#comment": "!!! DO NOT REMOVE THE MATERIAL/WEB DEP HERE, IT IS USED TO FORCE INSTALLING LATEST VERSION OF MATERIAL/WEB IN SHARED PACKAGE FOR TESTING !!!",
 	"devDependencies": {
-		"@material/web": "^0.1.0-alpha.0",
-		"@types/chai": "^4.3.11",
-		"@types/mocha": "^10.0.6",
-		"chai": "^5.0.0",
-		"mocha": "^10.2.0",
-		"typescript": "^5.3.3",
-		"wireit": "^0.14.1"
-	}
+		"@material/web": "^1.1.1",
+		"@rollup/plugin-virtual": "^3.0.2",
+		"rollup": "^4.3.0",
+		"vite": "^4.5.0"
+	},
+	"dependencies": {
+		"rollup-plugin-material-all-shared": "^1.0.0"
+	},
+	"files": [
+		"/lib",
+		"!/lib/**/*.js.map",
+		"!/lib/test"
+	]
 }
