@@ -5,16 +5,16 @@
  */
 import {type Plugin as RollupPlugin} from 'rollup';
 import {type Plugin as VitePlugin} from 'vite';
-import {
-	type MaterialAllPluginOptions,
-	createFilter,
-	DEFAULT_INCLUDE,
-	transform,
-	findElementsInFiles,
-} from 'rollup-plugin-material-all-shared';
+import {type MaterialAllPluginOptions} from './types.js';
+import {createFilter} from '@rollup/pluginutils';
+import fastGlob from 'fast-glob';
+import {findElementsFromFiles} from 'mwc3-back-helpers';
+import {transform} from './transform.js';
+
+const DEFAULT_INCLUDE = 'src/**/*.{js,ts,jsx,tsx}';
 
 export function materialAll(
-	options: Partial<MaterialAllPluginOptions> = {}
+	options: Partial<MaterialAllPluginOptions> = {},
 ): RollupPlugin & VitePlugin {
 	options.mode ??= 'perFile';
 	options.include ??= DEFAULT_INCLUDE;
@@ -32,9 +32,8 @@ export function materialAll(
 		async buildStart() {
 			// Scan the code to find md-* elements in 'all' mode
 			if (options.mode == 'all') {
-				const elementsFoundInFiles = await findElementsInFiles(
-					options.include!
-				);
+				const files = await fastGlob(options.include);
+				const elementsFoundInFiles = await findElementsFromFiles(files);
 				elements = elements.concat(elementsFoundInFiles);
 			}
 		},

@@ -1,7 +1,10 @@
-import {MATERIAL_ALL_IMPORT_REGEX} from './constants.js';
-import type {TransformationMode} from './index.js';
-import {getElementsImportsMap, mapNamesToImports} from './material.js';
-import {findElementsInContent} from './search.js';
+import {MATERIAL_ALL_IMPORT_REGEX} from 'mwc3-back-helpers/regexps.js';
+import {
+	MdElementsImportsMap,
+	findElementsFromContent,
+	pruneFakeElements,
+} from 'mwc3-back-helpers/md-elements.js';
+import type {TransformationMode} from './types.js';
 
 const materialAllImportGlobalRegex = new RegExp(MATERIAL_ALL_IMPORT_REGEX, 'g');
 
@@ -22,16 +25,16 @@ export async function transform(
 ): Promise<string> {
 	switch (mode) {
 		case 'perFile':
-			return await perFileTransform(code, id, elements);
+			return perFileTransform(code, id, elements);
 		case 'all':
 			if (elements === undefined) {
 				throw new Error("elements argument is required in 'all' mode.");
 			}
-			return await allTransformation(code, id, elements);
+			return allTransformation(code, id, elements);
 	}
 }
 
-export async function perFileTransform(
+export function perFileTransform(
 	code: string,
 	id: string,
 	additionalElements: string[] = [],
@@ -44,8 +47,11 @@ export async function perFileTransform(
 
 	let additionalImports = '';
 	if (additionalElements) {
-		const imports = await mapNamesToImports(additionalElements);
-		additionalImports = imports.map((path) => `import '${path}';`).join('\n');
+		// Remove fake elements and unifies list
+		additionalElements = [...new Set(pruneFakeElements(additionalElements))];
+		additionalImports = additionalElements
+			.map((elementName) => `import '${MdElementsImportsMap[elementName]}';`)
+			.join('\n');
 	}
 
 	// 1. Remove material all imports if any
@@ -53,17 +59,16 @@ export async function perFileTransform(
 	code = code.replaceAll(materialAllImportGlobalRegex, additionalImports);
 
 	// 2. Prepend elements found in this code
-	const elements = await findElementsInContent(code);
-	const importsMap = await getElementsImportsMap();
+	const elements = findElementsFromContent(code);
 	const imports = elements
-		.map((name) => `import "${importsMap[name]}";`)
+		.map((elementName) => `import '${MdElementsImportsMap[elementName]}';`)
 		.join('\n');
 	code = `${imports}${code}`;
 
 	return code;
 }
 
-export async function allTransformation(
+export function allTransformation(
 	code: string,
 	id: string,
 	elements: string[],
@@ -74,8 +79,9 @@ export async function allTransformation(
 		return code;
 	}
 	elements = [...new Set(elements)]; // Remove duplicates
-	const imports = await mapNamesToImports(elements);
-	const importsOutput = imports.map((path) => `import '${path}';`).join('\n');
+	const importsOutput = elements
+		.map((elementName) => `import '${MdElementsImportsMap[elementName]}';`)
+		.join('\n');
 
 	// 1. Replace all `@material/web/all.js` occurences with project elements.
 	// TODO: This should not be duplicated.

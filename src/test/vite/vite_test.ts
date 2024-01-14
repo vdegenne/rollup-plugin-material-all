@@ -4,6 +4,7 @@ import type {OutputChunk, RollupOutput} from 'rollup';
 import {assert} from 'chai';
 
 // Used to silence empty chunk warnings
+// @ts-ignore
 global.console.warn = () => '';
 
 async function build(materialAllPlugin: Plugin) {
@@ -40,7 +41,7 @@ describe('Vite', () => {
 				materialAll({
 					include,
 					mode: 'perFile', // default
-				})
+				}),
 			);
 
 			const aModule = output.find((out) => out.name === 'a') as OutputChunk;
@@ -53,7 +54,7 @@ describe('Vite', () => {
 
 			// Material all import should be removed
 			const mAllModule = output.find(
-				(out) => out.name === 'material'
+				(out) => out.name === 'material',
 			) as OutputChunk;
 			// equal to 1 because of the EOF return
 			assert.equal(mAllModule.code.length, 1);
@@ -65,7 +66,7 @@ describe('Vite', () => {
 					include,
 					mode: 'perFile',
 					additionalElements: ['md-circular-progress'],
-				})
+				}),
 			);
 
 			const aModule = output.find((out) => out.name === 'a') as OutputChunk;
@@ -78,7 +79,7 @@ describe('Vite', () => {
 
 			// Material all import should be removed
 			const mAllModule = output.find(
-				(out) => out.name === 'material'
+				(out) => out.name === 'material',
 			) as OutputChunk;
 			assert.include(mAllModule.code, 'let MdCircularProgress ');
 		});
@@ -90,7 +91,7 @@ describe('Vite', () => {
 				materialAll({
 					include,
 					mode: 'all',
-				})
+				}),
 			);
 
 			const aModule = output.find((out) => out.name === 'a') as OutputChunk;
@@ -101,7 +102,7 @@ describe('Vite', () => {
 
 			// Everything is at material all.js import
 			const mAllModule = output.find(
-				(out) => out.name === 'material'
+				(out) => out.name === 'material',
 			) as OutputChunk;
 			assert.include(mAllModule.code, 'let MdIcon ');
 			assert.include(mAllModule.code, 'let MdMenu ');
@@ -115,7 +116,7 @@ describe('Vite', () => {
 					include,
 					mode: 'all',
 					additionalElements: ['md-circular-progress', 'md-text-button'],
-				})
+				}),
 			);
 
 			const aModule = output.find((out) => out.name === 'a') as OutputChunk;
@@ -126,7 +127,7 @@ describe('Vite', () => {
 
 			// Everything is at material all.js import
 			const mAllModule = output.find(
-				(out) => out.name === 'material'
+				(out) => out.name === 'material',
 			) as OutputChunk;
 			assert.include(mAllModule.code, 'let MdIcon ');
 			assert.include(mAllModule.code, 'let MdMenu ');

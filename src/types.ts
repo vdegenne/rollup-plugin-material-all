@@ -15,17 +15,19 @@ export interface MaterialAllPluginOptions {
 	 * you define elements in static template that the parser can't understand.
 	 * in 'perFile' mode this can be used to add elements that are used in untransformable files
 	 * such as html files.
+	 *
+	 * @default []
 	 */
 	additionalElements: string[];
+	/**
+	 * Whether to include comments or not during the search for md-* elements in sources.
+	 *
+	 * @default false
+	 */
+	includeComments: boolean;
 	/**
 	 * @default all js,ts,jsx,tsx files under 'src' directory
 	 */
 	include: Array<string> | string;
 	exclude: Array<string> | string;
 }
-
-export * from './filter.js';
-export * from './search.js';
-export * from './material.js';
-export * from './constants.js';
-export * from './transform.js';
