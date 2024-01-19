@@ -18,7 +18,7 @@ export function materialAll(
 ): RollupPlugin & VitePlugin {
 	options.mode ??= 'perFile';
 	options.include ??= DEFAULT_INCLUDE;
-	options.includeComments = false;
+	options.includeComments ??= false;
 
 	const filter = createFilter(options.include, options.exclude);
 
@@ -28,7 +28,7 @@ export function materialAll(
 		name: 'material-all',
 
 		/** Vite-only attribute */
-		apply: 'build',
+		// apply: 'build',
 
 		async buildStart() {
 			// Scan the code to find md-* elements in 'all' mode

@@ -1,5 +1,12 @@
 # rollup-plugin-material-all
 
+## 1.2.0
+
+### Minor Changes
+
+- Fixed `includeComments` option not properly relayed
+- Upgraded `mwc3-back-helpers` to 0.5.1
+
 ## 1.1.0
 
 ### Minor Changes
