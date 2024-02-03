@@ -1,7 +1,7 @@
 import {OutputChunk, rollup} from 'rollup';
 import {materialAll} from '../../index.js';
 import {expect} from 'chai';
-import {findImportsInContent} from 'mwc3-back-helpers';
+import {findImportsInContent} from '../../utils.js';
 
 describe('Rollup', () => {
 	it('"perFile" mode', async () => {
@@ -22,7 +22,7 @@ describe('Rollup', () => {
 		const aModule = output.find((o) => o.name == 'a') as OutputChunk;
 		const bModule = output.find((o) => o.name == 'b') as OutputChunk;
 		const materialModule = output.find(
-			(o) => o.name == 'material',
+			(o) => o.name == 'material'
 		) as OutputChunk;
 
 		const aImports = findImportsInContent(aModule.code);
@@ -53,7 +53,7 @@ describe('Rollup', () => {
 		const aModule = output.find((o) => o.name == 'a') as OutputChunk;
 		const bModule = output.find((o) => o.name == 'b') as OutputChunk;
 		const materialModule = output.find(
-			(o) => o.name == 'material',
+			(o) => o.name == 'material'
 		) as OutputChunk;
 
 		const aImports = findImportsInContent(aModule.code);

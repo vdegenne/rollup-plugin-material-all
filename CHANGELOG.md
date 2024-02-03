@@ -1,5 +1,12 @@
 # rollup-plugin-material-all
 
+## 1.2.1
+
+### Patch Changes
+
+- Add mwc3-back-helpers as peer dependencies
+- Upgrade mwc3-back-helpers to v1
+
 ## 1.2.0
 
 ### Minor Changes
