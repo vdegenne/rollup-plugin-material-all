@@ -53,7 +53,7 @@ export function perFileTransform(
 		additionalElements = [...new Set(pruneFakeElements(additionalElements))];
 		additionalImports = additionalElements
 			.map((elementName) => `import '${MdElementsImportsMap[elementName]}';`)
-			.join('\n');
+			.join('');
 	}
 
 	// 1. Remove material all imports if any
@@ -64,7 +64,7 @@ export function perFileTransform(
 	const elements = findElementsFromContent(code, includeComments);
 	const imports = elements
 		.map((elementName) => `import '${MdElementsImportsMap[elementName]}';`)
-		.join('\n');
+		.join('');
 	code = `${imports}${code}`;
 
 	return code;

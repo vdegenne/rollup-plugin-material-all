@@ -1,5 +1,11 @@
 # rollup-plugin-material-all
 
+## 1.2.2
+
+### Patch Changes
+
+- remove new lines from imports to avoid breaking source maps
+
 ## 1.2.1
 
 ### Patch Changes
