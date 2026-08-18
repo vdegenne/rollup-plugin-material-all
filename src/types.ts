@@ -1,11 +1,17 @@
+import {type FilterPattern} from '@rollup/pluginutils';
+
 export type TransformationMode = 'all' | 'perFile';
 
 export interface MaterialAllPluginOptions {
 	/**
 	 * You can choose between 2 modes:
 	 *
-	 * - 'all': every `@material/web/all.js` imports will be substituted by imports of all elements found inside your sources.
-	 * - 'perFile': all occurence of `@material/web/all.js` will be deleted and individual imports of elements used will be prepended to the module where these elements are found. This is the recommended method since it can help with code-splitting and tree-shaking.
+	 * - 'perFile': All occurence of `@material/web/all.js` will be deleted
+	 *		and individual imports of known elements found in your code will be prepended to the module.
+	 *		This is the recommended method because it can help with code-splitting and tree-shaking.
+	 *
+	 * - 'all': Every `@material/web/all.js` imports will be substituted
+	 *		with imports of all elements found inside your sources.
 	 *
 	 * @default 'perFile'
 	 */
@@ -26,8 +32,8 @@ export interface MaterialAllPluginOptions {
 	 */
 	includeComments: boolean;
 	/**
-	 * @default all js,ts,jsx,tsx files under 'src' directory
+	 * @default all js,ts,jsx,tsx files under 'src' or 'lib' directory
 	 */
-	include: Array<string> | string;
-	exclude: Array<string> | string;
+	include: string | string[];
+	exclude: string | string[] | null;
 }

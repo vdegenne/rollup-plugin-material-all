@@ -11,18 +11,21 @@ import fastGlob from 'fast-glob';
 import {findElementsFromFiles} from 'mwc3-back-helpers';
 import {transform} from './transform.js';
 
-const DEFAULT_INCLUDE = 'src/**/*.{js,ts,jsx,tsx}';
-
 export function materialAll(
-	options: Partial<MaterialAllPluginOptions> = {}
+	options?: Partial<MaterialAllPluginOptions>
 ): RollupPlugin & VitePlugin {
-	options.mode ??= 'perFile';
-	options.include ??= DEFAULT_INCLUDE;
-	options.includeComments ??= false;
+	const _options: MaterialAllPluginOptions = {
+		mode: 'perFile',
+		include: './{src,lib}/**/*.{ts,js,jsx,tsx}',
+		exclude: null,
+		additionalElements: [],
+		includeComments: false,
+		...options,
+	};
 
-	const filter = createFilter(options.include, options.exclude);
+	const filter = createFilter(_options.include, _options.exclude);
 
-	let elements = options.additionalElements ?? [];
+	let elements = _options.additionalElements ?? [];
 
 	return {
 		name: 'material-all',
@@ -32,27 +35,27 @@ export function materialAll(
 
 		async buildStart() {
 			// Scan the code to find md-* elements in 'all' mode
-			if (options.mode == 'all') {
-				const files = await fastGlob(options.include);
+			if (_options.mode == 'all') {
+				const files = await fastGlob(_options.include);
 				const elementsFoundInFiles = await findElementsFromFiles(
 					files,
-					options.includeComments
+					_options.includeComments
 				);
 				elements = elements.concat(elementsFoundInFiles);
 			}
 		},
 
 		async transform(code: string, id: string) {
-			if (filter(id)) {
-				const result = await transform(
-					code,
-					id,
-					options.mode,
-					elements,
-					options.includeComments
-				);
-				return result;
-			}
+			if (!filter(id)) return null;
+
+			const result = await transform(
+				code,
+				id,
+				_options.mode,
+				elements,
+				_options.includeComments
+			);
+			return result;
 		},
 	};
 }

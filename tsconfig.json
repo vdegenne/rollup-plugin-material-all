@@ -1,10 +1,12 @@
 {
 	"compilerOptions": {
-		"target": "ES2022",
-		"moduleResolution": "NodeNext",
-		"module": "NodeNext",
-		"outDir": "lib",
-		"allowSyntheticDefaultImports": true,
+		"target": "esnext",
+		"moduleResolution": "nodenext",
+		"module": "nodenext",
+		"strict": true,
+		"outDir": "./lib/",
+		"rootDir": "./src/",
+		// "allowSyntheticDefaultImports": true,
 		"declaration": true,
 		"declarationMap": true,
 		"sourceMap": true,
