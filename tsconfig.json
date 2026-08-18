@@ -3,7 +3,7 @@
 		"target": "esnext",
 		"moduleResolution": "nodenext",
 		"module": "nodenext",
-		"strict": true,
+		"strict": false,
 		"outDir": "./lib/",
 		"rootDir": "./src/",
 		// "allowSyntheticDefaultImports": true,
